@@ -1,19 +1,20 @@
 package route
 
 import (
-	"../controllers"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/mvc"
+	"irisGorm/controllers"
+	"irisGorm/middleware"
 	"net/http"
-	"../middleware"
+
+	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/mvc"
 )
 
 func InitRouter(app *iris.Application) {
 	//app.Use(CrossAccess)
 	bathUrl := "/api"
 	mvc.New(app.Party(bathUrl + "/user")).Handle(controllers.NewUserController())
-	app.Use(middleware.GetJWT().Serve)  // jwt
-	mvc.New(app.Party(bathUrl +"/book")).Handle(controllers.NewBookController())
+	app.Use(middleware.GetJWT().Serve) // jwt
+	mvc.New(app.Party(bathUrl + "/book")).Handle(controllers.NewBookController())
 }
 
 func CrossAccess11(next http.Handler) http.Handler {
